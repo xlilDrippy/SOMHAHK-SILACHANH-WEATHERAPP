@@ -1,3 +1,4 @@
+////////Format Date for Today's Time/////////////
 function formatDate(timestamp){
     let date = new Date(timestamp);
     let hours = date.getHours();
@@ -13,7 +14,7 @@ function formatDate(timestamp){
     return `${day} ${hours}:${minutes}`;
 
 }
-
+/////////////Format Date for Forecast////////////////
 function formatDay(timestamp){
     let date = new Date(timestamp * 1000);
     let day = date.getDay();
@@ -21,6 +22,7 @@ function formatDay(timestamp){
     return days[day];
 }
 
+/////////"Loop" function to repeat html for Forecast Weather////////////
 function displayForecast(response){
 
     let forecast = response.data.daily; 
@@ -39,8 +41,8 @@ function displayForecast(response){
             alt=""
             width="42"/>
         <div class="weather-forecast-temperatures">
-            <span class="weather-forecast-temperature-max"> ${Math.round(forecastDay.temp.max)} </span>
-            <span class="weather-forecast-temperature-min"> ${Math.round(forecastDay.temp.min)} </span>
+            <span class="weather-forecast-temperature-max"> °${Math.round(forecastDay.temp.max)} </span>
+            <span class="weather-forecast-temperature-min"> °${Math.round(forecastDay.temp.min)} </span>
         </div>
     </div>
     `;
@@ -54,7 +56,6 @@ function getForecast(coordinates){
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=e9fb2a9a6df791c5c71eb9635363af89&units=metric`
     axios.get(apiUrl).then(displayForecast);
 }
-
 
 
 function displayTemperature(response){
@@ -78,6 +79,7 @@ function displayTemperature(response){
     dateElement.innerHTML = formatDate(response.data.dt * 1000);
     iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
+
 }
 
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=e9fb2a9a6df791c5c71eb9635363af89&units=metric`;
@@ -124,3 +126,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 displayForecast();
+
